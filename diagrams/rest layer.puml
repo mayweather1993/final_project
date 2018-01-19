@@ -1,0 +1,33 @@
+@startuml
+class UsersRestController {
++ ResponseEntity post(UserVM user)
++ ResponseEntity put(Long id, UserVM user)
++ ResponseEntity delete(Long id)
++ ResponseEntity getById(Long id)
++ ResponseEntity getSalaryByUserId(Long id, Instant from, Instant to)
++ ResponseEntity getCurrent()
++ ResponseEntity getCurrentUserSalary(Instant from, Instant to)
++ ResponseEntity getUsers(Pageable pageable)
+
+}
+
+class EventRestController {
++ ResponseEntity post(Event event)
++ ResponseEntity put(Long id, Event event)
++ ResponseEntity delete(Long id)
++ ResponseEntity getEvents(Pageable pageable)
+}
+
+class DepartmentsRestController {
++ ResponseEntity post(Department department)
++ ResponseEntity put(Long id, Department department)
++ ResponseEntity getDepartments(Pageable pageable)
+}
+
+class PositionsRestController {
++ ResponseEntity post(Position position)
++ ResponseEntity put(Long id, Position position)
++ ResponseEntity getPositions(Pageable pageable)
+}
+
+@enduml

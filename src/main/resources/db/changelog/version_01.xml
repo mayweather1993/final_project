@@ -1,0 +1,167 @@
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="admin">
+        <createSequence sequenceName="hibernate_sequence" startValue="1"/>
+        <createTable tableName="events">
+            <column name="id" type="${type.long}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_events_id"/>
+            </column>
+            <column name="event_type" type="${type.varchar}(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="position">
+            <column name="id" type="${type.long}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_position_id"/>
+            </column>
+            <column name="name" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="department">
+            <column name="id" type="${type.long}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_department_id"/>
+            </column>
+            <column name="name" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="event_user">
+            <column name="id" type="${type.long}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_event_user_id"/>
+            </column>
+            <column name="hours" type="${type.long}"/>
+            <column name="event_id" type="${type.long}">
+                <constraints nullable="true"/>
+            </column>
+            <column name="user_id" type="${type.long}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="receipt">
+            <column name="id" type="${type.long}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_receipt_id"/>
+            </column>
+            <column name="user_id" type="${type.long}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="salary" type="${type.dec}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="jhi_user">
+            <column name="id" type="${type.long}">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_user_id"/>
+            </column>
+            <column name="email" type="${type.varchar}(100)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password_hash" type="${type.varchar}(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="first_name" type="${type.varchar}(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="${type.varchar}(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="type" type="${type.varchar}(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status" type="${type.varchar}(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hour_salary" defaultValue="0" type="${type.dec}">
+            </column>
+            <column name="created_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="${type.varchar}(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="${type.timestamp}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="department_id" type="${type.long}">
+                <constraints nullable="false"/>
+            </column>
+            <column name="position_id" type="${type.long}">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="event_user" baseColumnNames="user_id" constraintName="fk_event_users"
+                                 referencedTableName="jhi_user" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="event_user" baseColumnNames="event_id" constraintName="fk_event_user_events"
+                                 referencedTableName="events" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="jhi_user" baseColumnNames="department_id" constraintName="fk_user_department"
+                                 referencedTableName="department" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="jhi_user" baseColumnNames="position_id" constraintName="fk_user_position"
+                                 referencedTableName="position" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,52 @@
+@startuml
+    interface CrudService<E> {
+        + Long create(E entity)
+        + void update(Long id, E updated)
+        + void delete(Long id)
+    }
+
+    interface UsersService<User> extends CrudService {
+        + User findByEmail(String email)
+        + Page<User> findUsers(Pageable pageable)
+        + User getCurrentUser()
+        + Double getCurrentUserSalary(Instant from, Instant to)
+        + Double getUserSalary(Long userId, Instant from, Instant to)
+        + User userVmToUser(UserVM userVM)
+        + User findById(Long id)
+
+    }
+
+    interface EventsService<Event> extends CrudService {
+        + Page<Even> getEvents(Pageable pageable)
+        + List<Event> getAllForMonth(int month)
+    }
+    interface EventUsersService<EventUser> extends CrudService
+
+    interface DepartmentsService<Department> extends CrudService {
+        + Page<Department> getDepartments(Pageable pageable)
+        + Department findById(Long id)
+    }
+
+    interface PositionsService<Position> extends CrudService {
+        + Page<Position> getPositions(Pageable pageable)
+        + Position findById(Long id)
+    }
+
+    interface ReceiptsService<Receipt> extends CrudService {
+        + Double getSalaryForUser(Long userId, Instant from, Instant to)
+        + Receipt findById(Long id)
+    }
+
+    class ReceiptsGenerator{
+        + void generateReceipts()
+        + void generateReceipt(User user, Long workedHours)
+        - Map<Long, Long> gatherInfoAboutWorkingHours()
+    }
+
+    class MailService{
+        + void sendEmail(String to, String subject, String content, boolean isMultipart, boolean isHtml)
+        + void sendEmailFromTemplate(String emailTo, String templateName, String title, List<String> parameters)
+        + void sendReceiptEmail(String emailTo, List<String> parameters)
+    }
+
+@enduml

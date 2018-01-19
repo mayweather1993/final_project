@@ -1,0 +1,102 @@
+@startuml
+
+package domain {
+    abstract class AbstractAuditingEntity {
+    String createdBy
+    String lastModifiedBy
+    Instant createdDate
+    Instant lastModifiedDate
+    }
+
+    class User extends AbstractAuditingEntity {
+    Long id
+    String email
+    String password
+    String firstName
+    String lastName
+    boolean active
+    UserStatus status
+    UserType type
+    Double hourSalary
+    Department department
+    Position position
+    }
+
+    class Position extends AbstractAuditingEntity {
+    Long id
+    String name
+    }
+
+    class Department extends AbstractAuditingEntity {
+    Long id
+    String name
+    }
+
+    enum UserType {
+    EMPLOYEE
+    MODERATOR
+    ADMIN
+    }
+
+    enum UserStatus {
+    WORKING
+    VACATION
+    PTO
+    }
+
+    class Event extends AbstractAuditingEntity {
+    Long id
+    EventType type
+    List<EventUser> eventUsers
+    }
+
+    class EventUser extends AbstractAuditingEntity {
+    Long id
+    Long hours
+    Long eventId
+    Long userId
+    }
+
+    enum EventType {
+    WORKING_DAY
+    TECH_STUDY
+    }
+
+    class Receipt extends AbstractAuditingEntity {
+    Long id
+    Long userId
+    Double salary
+    }
+}
+
+package repository {
+    interface UsersRepository extends JpaRepository {
+    + Optional<User> findByEmail(String email)
+    }
+    interface DepartmentsRepository extends JpaRepository
+    interface PositionsRepository extends JpaRepository
+    interface EventsRepository extends JpaRepository
+    interface EventUsersRepository extends JpaRepository
+    interface ReceiptsRepository extends JpaRepository
+}
+
+package services {
+    interface CrudService<E> {
+        + Long create(E entity)
+        + void update(Long id, E updated)
+        + void delete(Long id)
+    }
+
+    interface UsersService<User> extends CrudService {
+        + User findByEmail(String email)
+        + Page<User> findUsers(Pageable pageable)
+        + Double getUserSalary(Long userId, Instant from, Instant to)
+    }
+
+    interface EventsService<Event> extends CrudService
+    interface EventUsersService<EventUser> extends CrudService
+    interface DepartmentsService<Department> extends CrudService
+    interface PositionsService<Position> extends CrudService
+    interface ReceiptsService<Receipt> extends CrudService
+
+@enduml
